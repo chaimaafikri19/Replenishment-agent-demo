@@ -1,0 +1,9 @@
+# Python virtual environment (installed packages)
+.venv/
+
+# Files Python and pytest create automatically
+__pycache__/
+.pytest_cache/
+
+# Created when the API saves requisitions
+data/requisitions.json

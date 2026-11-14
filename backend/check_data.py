@@ -84,6 +84,12 @@ def validate(data):
     return problems
 
 
+def days_of_stock_left(product):
+    """How many days the stock will last, counting stock already on order."""
+    available = product["current_stock"] + product["on_order_quantity"]
+    return available / product["avg_daily_usage"]
+
+
 def risk_group(product, supplier):
     """
     Put a product into one of three risk groups.
@@ -98,7 +104,7 @@ def risk_group(product, supplier):
     usage = product["avg_daily_usage"]
     lead_time = supplier["lead_time_days"]
 
-    days_of_cover = available / usage
+    days_of_cover = days_of_stock_left(product)
     stock_left_at_delivery = available - usage * lead_time
 
     if days_of_cover < lead_time:

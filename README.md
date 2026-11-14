@@ -55,23 +55,54 @@ recommendations.
 
 ```
 replenishment-demo/
-├── README.md        # This file: what the project is and how to run it
-├── backend/         # Python code for the FastAPI app and the agent logic
-├── data/            # The fictional JSON data the API reads
-└── frontend/        # The HTML/CSS/JavaScript dashboard
+├── README.md            # This file: what the project is and how to run it
+├── requirements.txt     # Python packages the project needs
+├── pytest.ini           # Settings for the tests
+├── backend/
+│   ├── main.py          # The FastAPI app (the API endpoints)
+│   └── check_data.py    # Validates data.json and holds the risk rules
+├── data/
+│   ├── data.json        # Fictional products and suppliers
+│   └── requisitions.json  # Created automatically when you save a requisition
+├── tests/               # Automated tests (run with pytest)
+└── frontend/            # The HTML/CSS/JavaScript dashboard (not built yet)
 ```
 
-## Status
+## Setup (once)
 
-This project is at the very start. So far there is only this README and the
-empty folders above. Setup and run instructions will be added here as each
-part gets built.
+You need Python 3.10 or newer. In a terminal, from the project folder:
+
+```bash
+python3 -m venv .venv              # create a private folder for packages
+source .venv/bin/activate          # switch to it (Windows: .venv\Scripts\activate)
+pip install -r requirements.txt    # install FastAPI, uvicorn, pytest, httpx
+```
+
+Each time you open a new terminal, run `source .venv/bin/activate` again.
+You will see `(.venv)` at the start of the prompt when it is active.
+
+## Running
+
+```bash
+python3 backend/check_data.py      # check the data and count products per risk group
+pytest                             # run the tests
+uvicorn backend.main:app --reload  # start the API (stop it with Ctrl+C)
+```
+
+With the API running, open <http://127.0.0.1:8000/docs> to try every endpoint
+in your browser.
+
+| Endpoint             | What it does                                                   |
+|----------------------|----------------------------------------------------------------|
+| `GET /stock`         | All products, with `days_of_stock_left` and `risk_group` added |
+| `GET /suppliers`     | All suppliers                                                  |
+| `POST /requisitions` | Saves `{"product_id": "P003", "quantity": 2000}` to `data/requisitions.json` and returns the saved record |
 
 ## Planned steps
 
 - [x] Project description and folder structure
-- [ ] Fictional data in `data/`
-- [ ] FastAPI app in `backend/` that serves the data
-- [ ] Reorder logic (days of stock left, reorder point, order quantity)
+- [x] Fictional data in `data/`
+- [x] FastAPI app in `backend/` that serves the data
+- [ ] Reorder logic (reorder point, suggested order quantity)
 - [ ] Agent that explains its recommendations in plain language
 - [ ] Dashboard in `frontend/`
