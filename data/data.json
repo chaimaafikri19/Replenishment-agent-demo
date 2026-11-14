@@ -1,0 +1,59 @@
+{
+  "company": "Hearthfield Foods",
+  "note": "All companies, suppliers, products and numbers in this file are fictional.",
+  "suppliers": [
+    { "id": "S01", "name": "Millbrook Grain Co.",       "lead_time_days": 5,  "minimum_order_quantity": 1000 },
+    { "id": "S02", "name": "Sweetvale Sugars",          "lead_time_days": 7,  "minimum_order_quantity": 500 },
+    { "id": "S03", "name": "Greenpasture Dairy",        "lead_time_days": 2,  "minimum_order_quantity": 100 },
+    { "id": "S04", "name": "Harrowgate Oils & Fats",    "lead_time_days": 6,  "minimum_order_quantity": 400 },
+    { "id": "S05", "name": "Coastline Packaging Ltd",   "lead_time_days": 14, "minimum_order_quantity": 5000 },
+    { "id": "S06", "name": "Orchard Lane Ingredients",  "lead_time_days": 4,  "minimum_order_quantity": 50 }
+  ],
+  "products": [
+    { "id": "P001", "name": "Strong white bread flour",   "unit": "kg",     "current_stock": 11400,  "avg_daily_usage": 950,  "safety_stock": 2000,  "supplier_id": "S01", "on_order_quantity": 0 },
+    { "id": "P002", "name": "Plain flour",                "unit": "kg",     "current_stock": 5200,   "avg_daily_usage": 620,  "safety_stock": 1500,  "supplier_id": "S01", "on_order_quantity": 3000 },
+    { "id": "P003", "name": "Rye flour",                  "unit": "kg",     "current_stock": 420,    "avg_daily_usage": 120,  "safety_stock": 300,   "supplier_id": "S01", "on_order_quantity": 0 },
+    { "id": "P004", "name": "Rolled oats",                "unit": "kg",     "current_stock": 2100,   "avg_daily_usage": 140,  "safety_stock": 350,   "supplier_id": "S01", "on_order_quantity": 0 },
+    { "id": "P005", "name": "Durum semolina",             "unit": "kg",     "current_stock": 1150,   "avg_daily_usage": 60,   "safety_stock": 200,   "supplier_id": "S01", "on_order_quantity": 0 },
+    { "id": "P006", "name": "Cornflour",                  "unit": "kg",     "current_stock": 640,    "avg_daily_usage": 35,   "safety_stock": 100,   "supplier_id": "S01", "on_order_quantity": 0 },
+    { "id": "P007", "name": "Wholemeal flour",            "unit": "kg",     "current_stock": 950,    "avg_daily_usage": 150,  "safety_stock": 400,   "supplier_id": "S01", "on_order_quantity": 0 },
+    { "id": "P008", "name": "Self-raising flour",         "unit": "kg",     "current_stock": 4300,   "avg_daily_usage": 280,  "safety_stock": 700,   "supplier_id": "S01", "on_order_quantity": 0 },
+
+    { "id": "P009", "name": "Granulated sugar",           "unit": "kg",     "current_stock": 9800,   "avg_daily_usage": 520,  "safety_stock": 1800,  "supplier_id": "S02", "on_order_quantity": 0 },
+    { "id": "P010", "name": "Icing sugar",                "unit": "kg",     "current_stock": 1400,   "avg_daily_usage": 75,   "safety_stock": 250,   "supplier_id": "S02", "on_order_quantity": 0 },
+    { "id": "P011", "name": "Light brown sugar",          "unit": "kg",     "current_stock": 1050,   "avg_daily_usage": 60,   "safety_stock": 200,   "supplier_id": "S02", "on_order_quantity": 0 },
+    { "id": "P012", "name": "Caster sugar",               "unit": "kg",     "current_stock": 340,    "avg_daily_usage": 85,   "safety_stock": 300,   "supplier_id": "S02", "on_order_quantity": 0 },
+    { "id": "P013", "name": "Golden syrup",               "unit": "kg",     "current_stock": 380,    "avg_daily_usage": 40,   "safety_stock": 150,   "supplier_id": "S02", "on_order_quantity": 500 },
+    { "id": "P014", "name": "Glucose syrup",              "unit": "kg",     "current_stock": 1300,   "avg_daily_usage": 55,   "safety_stock": 200,   "supplier_id": "S02", "on_order_quantity": 0 },
+
+    { "id": "P015", "name": "Whole milk",                 "unit": "litres", "current_stock": 3100,   "avg_daily_usage": 800,  "safety_stock": 600,   "supplier_id": "S03", "on_order_quantity": 0 },
+    { "id": "P016", "name": "Double cream",               "unit": "litres", "current_stock": 520,    "avg_daily_usage": 120,  "safety_stock": 100,   "supplier_id": "S03", "on_order_quantity": 0 },
+    { "id": "P017", "name": "Free-range eggs",            "unit": "units",  "current_stock": 31500,  "avg_daily_usage": 9000, "safety_stock": 6000,  "supplier_id": "S03", "on_order_quantity": 0 },
+    { "id": "P018", "name": "Unsalted butter",            "unit": "kg",     "current_stock": 260,    "avg_daily_usage": 210,  "safety_stock": 200,   "supplier_id": "S03", "on_order_quantity": 0 },
+    { "id": "P019", "name": "Cream cheese",               "unit": "kg",     "current_stock": 210,    "avg_daily_usage": 45,   "safety_stock": 40,    "supplier_id": "S03", "on_order_quantity": 0 },
+    { "id": "P020", "name": "Skimmed milk powder",        "unit": "kg",     "current_stock": 340,    "avg_daily_usage": 30,   "safety_stock": 50,    "supplier_id": "S03", "on_order_quantity": 0 },
+
+    { "id": "P021", "name": "Sunflower oil",              "unit": "litres", "current_stock": 4100,   "avg_daily_usage": 260,  "safety_stock": 800,   "supplier_id": "S04", "on_order_quantity": 0 },
+    { "id": "P022", "name": "Rapeseed oil",               "unit": "litres", "current_stock": 500,    "avg_daily_usage": 95,   "safety_stock": 300,   "supplier_id": "S04", "on_order_quantity": 200 },
+    { "id": "P023", "name": "Extra virgin olive oil",     "unit": "litres", "current_stock": 610,    "avg_daily_usage": 40,   "safety_stock": 120,   "supplier_id": "S04", "on_order_quantity": 0 },
+    { "id": "P024", "name": "Vegetable shortening",       "unit": "kg",     "current_stock": 1500,   "avg_daily_usage": 110,  "safety_stock": 300,   "supplier_id": "S04", "on_order_quantity": 0 },
+    { "id": "P025", "name": "Baking margarine",           "unit": "kg",     "current_stock": 600,    "avg_daily_usage": 90,   "safety_stock": 250,   "supplier_id": "S04", "on_order_quantity": 800 },
+
+    { "id": "P026", "name": "Dried active yeast",         "unit": "kg",     "current_stock": 145,    "avg_daily_usage": 12,   "safety_stock": 30,    "supplier_id": "S06", "on_order_quantity": 0 },
+    { "id": "P027", "name": "Fresh baker's yeast",        "unit": "kg",     "current_stock": 45,     "avg_daily_usage": 18,   "safety_stock": 25,    "supplier_id": "S06", "on_order_quantity": 0 },
+    { "id": "P028", "name": "Fine sea salt",              "unit": "kg",     "current_stock": 520,    "avg_daily_usage": 40,   "safety_stock": 100,   "supplier_id": "S06", "on_order_quantity": 0 },
+    { "id": "P029", "name": "Baking powder",              "unit": "kg",     "current_stock": 180,    "avg_daily_usage": 14,   "safety_stock": 40,    "supplier_id": "S06", "on_order_quantity": 0 },
+    { "id": "P030", "name": "Tomato paste",               "unit": "kg",     "current_stock": 2900,   "avg_daily_usage": 300,  "safety_stock": 600,   "supplier_id": "S06", "on_order_quantity": 0 },
+    { "id": "P031", "name": "Vanilla extract",            "unit": "litres", "current_stock": 38,     "avg_daily_usage": 3,    "safety_stock": 10,    "supplier_id": "S06", "on_order_quantity": 0 },
+    { "id": "P032", "name": "Ground cinnamon",            "unit": "kg",     "current_stock": 26,     "avg_daily_usage": 2.5,  "safety_stock": 8,     "supplier_id": "S06", "on_order_quantity": 0 },
+    { "id": "P033", "name": "Cocoa powder",               "unit": "kg",     "current_stock": 470,    "avg_daily_usage": 45,   "safety_stock": 120,   "supplier_id": "S06", "on_order_quantity": 0 },
+
+    { "id": "P034", "name": "Printed cake boxes",         "unit": "units",  "current_stock": 9600,   "avg_daily_usage": 1200, "safety_stock": 5000,  "supplier_id": "S05", "on_order_quantity": 0 },
+    { "id": "P035", "name": "Printed bread bags",         "unit": "units",  "current_stock": 96000,  "avg_daily_usage": 4200, "safety_stock": 20000, "supplier_id": "S05", "on_order_quantity": 0 },
+    { "id": "P036", "name": "Glass sauce jars 500 ml",    "unit": "units",  "current_stock": 41000,  "avg_daily_usage": 2600, "safety_stock": 12000, "supplier_id": "S05", "on_order_quantity": 25000 },
+    { "id": "P037", "name": "Metal twist-off jar lids",   "unit": "units",  "current_stock": 62000,  "avg_daily_usage": 2600, "safety_stock": 12000, "supplier_id": "S05", "on_order_quantity": 0 },
+    { "id": "P038", "name": "Pallet shrink-wrap film",    "unit": "kg",     "current_stock": 380,    "avg_daily_usage": 22,   "safety_stock": 150,   "supplier_id": "S05", "on_order_quantity": 0 },
+    { "id": "P039", "name": "Corrugated shipping cartons","unit": "units",  "current_stock": 9800,   "avg_daily_usage": 380,  "safety_stock": 2000,  "supplier_id": "S05", "on_order_quantity": 0 },
+    { "id": "P040", "name": "Self-adhesive product labels","unit": "units", "current_stock": 150000, "avg_daily_usage": 6500, "safety_stock": 30000, "supplier_id": "S05", "on_order_quantity": 0 }
+  ]
+}
