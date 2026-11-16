@@ -7,3 +7,4 @@ __pycache__/
 
 # Created when the API saves requisitions
 data/requisitions.json
+.DS_Store

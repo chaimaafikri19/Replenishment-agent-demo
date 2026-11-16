@@ -1,5 +1,9 @@
 # Replenishment Assistant (Demo)
 
+![Replenishment agent dashboard](docs/dashboard.png)
+
+This is a demo for a fictional food manufacturer, and all data is made up.
+
 A small demo of an AI agent that helps a **buyer** decide which raw materials
 to reorder, and how much.
 

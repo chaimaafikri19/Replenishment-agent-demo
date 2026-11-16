@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 # Reuse the calculations from check_data.py instead of writing them twice.
@@ -26,6 +27,14 @@ REQUISITIONS_FILE = DATA_FOLDER / "requisitions.json"
 app = FastAPI(
     title="Replenishment Assistant",
     description="Demo API for a fictional food manufacturer's buyer.",
+)
+
+# Let the dashboard (served on port 5500) call this API from the browser.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5500", "http://127.0.0.1:5500"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
 )
 
 

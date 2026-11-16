@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Replenishment review · Hearthfield Foods</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Top bar: brand, breadcrumb, today's date -->
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 21V9M12 13c-3 0-5-2-5.5-5 3 0 5 2 5.5 5zm0 0c3 0 5-2 5.5-5-3 0-5 2-5.5 5zm0 4c-3.5 0-6-2.2-6.5-5.5 3.5 0 6 2.2 6.5 5.5zm0 0c3.5 0 6-2.2 6.5-5.5-3.5 0-6 2.2-6.5 5.5zM12 9c-1.2-1.5-1.2-3.5 0-5 1.2 1.5 1.2 3.5 0 5z"
+              fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-name">Hearthfield Foods</span>
+    </div>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <ol>
+        <li>Procurement</li>
+        <li aria-current="page">Replenishment</li>
+      </ol>
+    </nav>
+    <time class="today" id="today"></time>
+  </header>
+
+  <main class="page">
+    <!-- Page heading and agent status -->
+    <div class="page-head">
+      <div>
+        <h1>Replenishment review</h1>
+        <p class="subtitle" id="subtitle">Loading suggestions…</p>
+      </div>
+      <p class="agent-status" id="agent-status" hidden></p>
+    </div>
+
+    <!-- Messages (success / error) are shown here -->
+    <div id="message" class="message" role="status" aria-live="polite" hidden></div>
+
+    <!-- Three summary cards -->
+    <section class="summary" id="summary" aria-label="Stock summary"></section>
+
+    <div class="layout">
+      <!-- Suggestion list with filters -->
+      <section class="suggestions" aria-labelledby="suggestions-title">
+        <div class="list-head">
+          <h2 id="suggestions-title">Agent suggestions</h2>
+          <div class="filters" role="group" aria-label="Filter suggestions by urgency">
+            <button type="button" class="filter is-active" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="filter" data-filter="high" aria-pressed="false">High</button>
+            <button type="button" class="filter" data-filter="medium" aria-pressed="false">Medium</button>
+          </div>
+        </div>
+        <div id="list" class="list"></div>
+      </section>
+
+      <!-- Right panel: approved drafts waiting to be saved -->
+      <aside class="panel" aria-labelledby="panel-title">
+        <div class="panel-head">
+          <h2 id="panel-title">Ready to save</h2>
+          <span class="count-chip" id="panel-count">0 items</span>
+        </div>
+        <p class="panel-intro">Approved drafts stay here until you save your requisition.</p>
+        <hr>
+        <div id="panel-body"></div>
+      </aside>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
