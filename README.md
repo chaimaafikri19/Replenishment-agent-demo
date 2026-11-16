@@ -4,6 +4,8 @@
 
 This is a demo for a fictional food manufacturer, and all data is made up.
 
+Live demo: (link coming soon)
+
 A small demo of an AI agent that helps a **buyer** decide which raw materials
 to reorder, and how much.
 
@@ -70,7 +72,13 @@ replenishment-demo/
 │   ├── data.json        # Fictional products and suppliers
 │   └── requisitions.json  # Created automatically when you save a requisition
 ├── tests/               # Automated tests (run with pytest)
-└── frontend/            # The HTML/CSS/JavaScript dashboard (not built yet)
+├── scripts/
+│   └── export_demo_data.py  # Saves a data snapshot for the static demo
+└── frontend/            # The HTML/CSS/JavaScript dashboard
+    ├── index.html
+    ├── styles.css
+    ├── app.js
+    └── demo-data.json   # Snapshot used in demo mode (no API needed)
 ```
 
 ## Setup (once)
@@ -86,16 +94,52 @@ pip install -r requirements.txt    # install FastAPI, uvicorn, pytest, httpx
 Each time you open a new terminal, run `source .venv/bin/activate` again.
 You will see `(.venv)` at the start of the prompt when it is active.
 
-## Running
+## How to run it
+
+The addresses below only work after you start the project on your own
+computer.
+
+1. Create and activate the virtual environment, then install the packages
+   (see [Setup](#setup-once) for details):
+
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   pip install -r requirements.txt
+   ```
+
+2. Start the API (stop it with Ctrl+C):
+
+   ```bash
+   .venv/bin/uvicorn backend.main:app --reload
+   ```
+
+3. In a second terminal, start the dashboard page:
+
+   ```bash
+   python3 -m http.server 5500 -d frontend
+   ```
+
+4. Open `http://localhost:5500` in your browser.
+
+While the API is running, its interactive docs are at
+`http://127.0.0.1:8000/docs`, where you can try every endpoint.
+
+### Other commands
 
 ```bash
-python3 backend/check_data.py      # check the data and count products per risk group
-pytest                             # run the tests
-uvicorn backend.main:app --reload  # start the API (stop it with Ctrl+C)
+python3 backend/check_data.py             # check the data and count products per risk group
+pytest                                    # run the tests
+.venv/bin/python scripts/export_demo_data.py  # refresh frontend/demo-data.json
 ```
 
-With the API running, open <http://127.0.0.1:8000/docs> to try every endpoint
-in your browser.
+### Demo mode
+
+When the dashboard is opened from `localhost` or `127.0.0.1`, it uses the API.
+On any other address (for example a static hosting site), it loads
+`frontend/demo-data.json` instead and shows a "Demo mode" banner. Approve,
+Edit quantity and Dismiss work as usual, but saving never calls the API.
+Run `scripts/export_demo_data.py` to refresh the snapshot.
 
 | Endpoint             | What it does                                                   |
 |----------------------|----------------------------------------------------------------|
@@ -135,4 +179,5 @@ The agent only suggests: nothing is saved until someone sends a draft to
 - [x] FastAPI app in `backend/` that serves the data
 - [x] Reorder logic (suggested order quantity)
 - [x] Agent that explains its recommendations in plain language (template-based)
-- [ ] Dashboard in `frontend/`
+- [x] Dashboard in `frontend/`
+- [x] Demo mode with a data snapshot, so the dashboard can run as a static site

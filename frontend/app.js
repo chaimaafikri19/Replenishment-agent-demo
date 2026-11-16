@@ -4,6 +4,11 @@
 
 const API = "http://127.0.0.1:8000";
 
+// Demo mode: on any host other than this computer, load a saved snapshot
+// (demo-data.json) instead of calling the API, and never save anything.
+const DEMO = !["localhost", "127.0.0.1"].includes(location.hostname);
+let snapshotDate = null;  // set in demo mode, e.g. "2026-11-16"
+
 // ---------- State ----------
 let drafts = [];          // from GET /agent/suggestions
 let stockById = {};       // from GET /stock, keyed by product id
@@ -65,7 +70,7 @@ function hideMessage() {
 async function load() {
   hideMessage();
   try {
-    const [suggestions, stock, suppliers] = await Promise.all([
+    const [suggestions, stock, suppliers] = DEMO ? await loadDemoData() : await Promise.all([
       getJson("/agent/suggestions"),
       getJson("/stock"),
       getJson("/suppliers").catch(() => []), // only used for nicer summary cards
@@ -78,9 +83,11 @@ async function load() {
       review[d.product_id] = { status: "draft", quantity: d.quantity, editing: false, error: "" };
     });
 
-    const now = new Date();
     const status = document.getElementById("agent-status");
-    status.textContent = `Replenishment agent · Last run ${now.toTimeString().slice(0, 5)} · ${stock.length} products checked`;
+    const run = DEMO
+      ? `Snapshot ${formatDate(parseIsoDate(snapshotDate), true)}`
+      : `Last run ${new Date().toTimeString().slice(0, 5)}`;
+    status.textContent = `Replenishment agent · ${run} · ${stock.length} products checked`;
     status.hidden = false;
 
     renderAll();
@@ -90,15 +97,35 @@ async function load() {
   }
 }
 
-// Friendly message instead of a blank page when the API is down.
+// Demo mode: read the snapshot file and show the banner and snapshot date.
+async function loadDemoData() {
+  const response = await fetch("demo-data.json");
+  if (!response.ok) throw new Error(`demo-data.json returned ${response.status}`);
+  const data = await response.json();
+  snapshotDate = data.snapshot_date;
+
+  const shown = formatDate(parseIsoDate(snapshotDate), true);
+  const banner = document.getElementById("demo-banner");
+  banner.textContent = `Demo mode: sample data from ${shown}. Nothing is saved.`;
+  banner.hidden = false;
+  showHeaderDate(parseIsoDate(snapshotDate));
+
+  return [data.agent_suggestions, data.stock, data.suppliers];
+}
+
+// Friendly message instead of a blank page when the data can't be loaded.
 function renderLoadError() {
   document.getElementById("subtitle").textContent = "We couldn't load the agent's suggestions.";
-  showMessage("error", "The replenishment service isn't reachable right now.",
-    " Check that the API is running on http://127.0.0.1:8000, then try again.");
+  if (DEMO) {
+    showMessage("error", "The sample data couldn't be loaded.", " Please reload the page to try again.");
+  } else {
+    showMessage("error", "The replenishment service isn't reachable right now.",
+      " Check that the API is running on http://127.0.0.1:8000, then try again.");
+  }
   document.getElementById("list").innerHTML = `
     <div class="card empty">
       <strong>No suggestions to show</strong>
-      <p>Start the API and reload this page.</p>
+      <p>${DEMO ? "Reload this page to try again." : "Start the API and reload this page."}</p>
       <p style="margin-top:12px"><button type="button" class="btn btn-primary" id="retry">Try again</button></p>
     </div>`;
   document.getElementById("retry").addEventListener("click", load);
@@ -215,7 +242,7 @@ function cardHtml(d) {
   // Buttons depend on the card's status.
   let actions;
   if (r.status === "saved") {
-    actions = `<span class="status-text">Saved as requisition ${esc(r.savedId)}</span>`;
+    actions = `<span class="status-text">${DEMO ? "Saved (demo, not saved)" : `Saved as requisition ${esc(r.savedId)}`}</span>`;
   } else if (r.status === "dismissed") {
     actions = `<span class="status-text">Dismissed</span>
       <button type="button" class="btn btn-secondary" data-action="undo" data-id="${id}"
@@ -359,6 +386,18 @@ async function save() {
   saving = true;
   renderPanel();
 
+  // Demo mode: never call the API, just mark the items as saved.
+  if (DEMO) {
+    approved.forEach((d) => { review[d.product_id].status = "saved"; });
+    saving = false;
+    showMessage("success", `Saved ${plural(approved.length, "requisition")} (demo, not saved).`,
+      " Nothing has been sent to suppliers.");
+    renderList();
+    renderPanel();
+    document.getElementById("message").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    return;
+  }
+
   const savedIds = [];
   let failed = 0;
   for (const d of approved) {
@@ -424,6 +463,12 @@ document.querySelectorAll(".filter").forEach((button) => {
   });
 });
 
-document.getElementById("today").textContent = formatDate(new Date(), true);
-document.getElementById("today").dateTime = new Date().toISOString().slice(0, 10);
+// Header date: today, or the snapshot date in demo mode.
+function showHeaderDate(date) {
+  const el = document.getElementById("today");
+  el.textContent = formatDate(date, true);
+  el.dateTime = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+}
+
+if (!DEMO) showHeaderDate(new Date());
 load();
