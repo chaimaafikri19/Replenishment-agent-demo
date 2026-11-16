@@ -208,6 +208,20 @@ def test_real_data_fresh_yeast_uses_short_window_and_minimum():
     assert yeast["quantity"] == 120
 
 
+def test_real_data_butter_is_perishable():
+    drafts = suggest_requisitions(load_real_data(), today=TODAY)
+    butter = next(d for d in drafts if d["product_id"] == "P018")
+    # (7 x 210) + 200 - 260 = 1,410 kg, above the 250 kg minimum
+    assert butter["quantity"] == 1410
+    assert butter["urgency"] == "high"
+    assert butter["expected_delivery_date"] == "2026-11-18"  # Mon + 2 days = Wednesday
+    assert butter["reason"] == (
+        "Unsalted butter has 1.2 days of stock left (260 kg available), but Greenpasture "
+        "Dairy needs 2 days to deliver. Ordering 1,410 kg brings stock up to 7 days of use "
+        "(kept short because it is perishable) at 210 kg a day, plus the safety stock of 200 kg."
+    )
+
+
 def test_suggestions_do_not_change_the_data():
     data = load_real_data()
     before = json.dumps(data)

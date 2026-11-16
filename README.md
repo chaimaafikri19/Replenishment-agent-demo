@@ -111,7 +111,7 @@ quantity = (coverage days × daily usage) + safety stock − (current stock + on
 ```
 
 - **Coverage days** is 30, or 7 for products marked `"perishable": true`
-  (milk, cream, cream cheese, fresh yeast), so they don't spoil.
+  (milk, cream, cream cheese, butter, fresh yeast), so they don't spoil.
 - **Minimum order quantity** is set per product (`min_order_quantity`), for
   example 5,000 kg for bread flour but 50 kg for shrink-wrap film.
 - **Expected delivery** is today plus the supplier's lead time, moved to Monday

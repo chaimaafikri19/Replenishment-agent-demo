@@ -29,7 +29,7 @@
     { "id": "P015", "name": "Whole milk",                   "unit": "litres", "current_stock": 3100,   "avg_daily_usage": 800,  "safety_stock": 600,   "min_order_quantity": 500,   "perishable": true,  "supplier_id": "S03", "on_order_quantity": 0 },
     { "id": "P016", "name": "Double cream",                 "unit": "litres", "current_stock": 520,    "avg_daily_usage": 120,  "safety_stock": 100,   "min_order_quantity": 50,    "perishable": true,  "supplier_id": "S03", "on_order_quantity": 0 },
     { "id": "P017", "name": "Free-range eggs",              "unit": "units",  "current_stock": 31500,  "avg_daily_usage": 9000, "safety_stock": 6000,  "min_order_quantity": 3600,  "perishable": false, "supplier_id": "S03", "on_order_quantity": 0 },
-    { "id": "P018", "name": "Unsalted butter",              "unit": "kg",     "current_stock": 260,    "avg_daily_usage": 210,  "safety_stock": 200,   "min_order_quantity": 250,   "perishable": false, "supplier_id": "S03", "on_order_quantity": 0 },
+    { "id": "P018", "name": "Unsalted butter",              "unit": "kg",     "current_stock": 260,    "avg_daily_usage": 210,  "safety_stock": 200,   "min_order_quantity": 250,   "perishable": true,  "supplier_id": "S03", "on_order_quantity": 0 },
     { "id": "P019", "name": "Cream cheese",                 "unit": "kg",     "current_stock": 210,    "avg_daily_usage": 45,   "safety_stock": 40,    "min_order_quantity": 20,    "perishable": true,  "supplier_id": "S03", "on_order_quantity": 0 },
     { "id": "P020", "name": "Skimmed milk powder",          "unit": "kg",     "current_stock": 340,    "avg_daily_usage": 30,   "safety_stock": 50,    "min_order_quantity": 125,   "perishable": false, "supplier_id": "S03", "on_order_quantity": 0 },
 
