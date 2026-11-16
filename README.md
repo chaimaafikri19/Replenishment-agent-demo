@@ -100,6 +100,30 @@ in your browser.
 | `GET /agent/suggestions` | Draft requisitions for at-risk products, with quantity, urgency, delivery date and a reason. Saves nothing |
 | `POST /requisitions` | Saves `{"product_id": "P003", "quantity": 2000}` to `data/requisitions.json` and returns the saved record |
 
+## How the agent decides
+
+For every product in the **will run out** or **close to limit** group,
+`backend/agent.py` drafts a requisition:
+
+```
+quantity = (coverage days × daily usage) + safety stock − (current stock + on order)
+           rounded up, and never below the product's min_order_quantity
+```
+
+- **Coverage days** is 30, or 7 for products marked `"perishable": true`
+  (milk, cream, cream cheese, fresh yeast), so they don't spoil.
+- **Minimum order quantity** is set per product (`min_order_quantity`), for
+  example 5,000 kg for bread flour but 50 kg for shrink-wrap film.
+- **Expected delivery** is today plus the supplier's lead time, moved to Monday
+  if it lands on a weekend.
+- **The reason** is two sentences built from templates with the real numbers.
+  The templates use "has" or "have" depending on the product name, and count
+  items by their own name ("9,600 boxes" rather than "9,600 units").
+
+All of these numbers are named constants at the top of `backend/agent.py`.
+The agent only suggests: nothing is saved until someone sends a draft to
+`POST /requisitions`.
+
 ## Planned steps
 
 - [x] Project description and folder structure

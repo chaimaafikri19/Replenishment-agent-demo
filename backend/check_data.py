@@ -17,22 +17,24 @@ DATA_FILE = Path(__file__).parent.parent / "data" / "data.json"
 ALLOWED_UNITS = {"kg", "litres", "units"}
 
 # Fields every supplier and product must have, and the type each one should be.
-# (int, float) means "any number".
+# NUMBER means "any number"; bool means true or false.
+NUMBER = (int, float)
 SUPPLIER_FIELDS = {
     "id": str,
     "name": str,
-    "lead_time_days": (int, float),
-    "minimum_order_quantity": (int, float),
+    "lead_time_days": NUMBER,
 }
 PRODUCT_FIELDS = {
     "id": str,
     "name": str,
     "unit": str,
-    "current_stock": (int, float),
-    "avg_daily_usage": (int, float),
-    "safety_stock": (int, float),
+    "current_stock": NUMBER,
+    "avg_daily_usage": NUMBER,
+    "safety_stock": NUMBER,
+    "min_order_quantity": NUMBER,  # the smallest amount the supplier sells of this product
+    "perishable": bool,            # true for products that spoil quickly, like milk
     "supplier_id": str,
-    "on_order_quantity": (int, float),
+    "on_order_quantity": NUMBER,
 }
 
 
@@ -42,9 +44,12 @@ def check_fields(item, fields, label):
     for field, expected_type in fields.items():
         if field not in item:
             problems.append(f"{label}: missing field '{field}'")
-        elif not isinstance(item[field], expected_type) or isinstance(item[field], bool):
+            continue  # nothing else to check for a missing field
+        value = item[field]
+        # Python treats true/false as numbers, so reject them for number fields.
+        if not isinstance(value, expected_type) or (expected_type == NUMBER and isinstance(value, bool)):
             problems.append(f"{label}: '{field}' has the wrong type")
-        elif expected_type == (int, float) and item[field] < 0:
+        elif expected_type == NUMBER and value < 0:
             problems.append(f"{label}: '{field}' must not be negative")
     return problems
 
