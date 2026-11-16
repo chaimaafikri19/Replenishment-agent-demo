@@ -55,6 +55,32 @@ def test_suppliers_returns_all_six(client):
     assert len(response.json()) == 6
 
 
+# ---------- GET /agent/suggestions ----------
+
+def test_agent_suggestions_returns_drafts(client):
+    response = client.get("/agent/suggestions")
+    assert response.status_code == 200
+    drafts = response.json()
+    assert len(drafts) == 8
+    assert all(d["status"] == "draft" for d in drafts)
+
+
+def test_agent_suggestions_save_nothing(client):
+    client.get("/agent/suggestions")
+    assert not main.REQUISITIONS_FILE.exists()
+
+
+def test_a_draft_can_be_confirmed_with_post_requisitions(client):
+    # This is the "human in control" step: a person picks a draft and saves it.
+    draft = client.get("/agent/suggestions").json()[0]
+    response = client.post("/requisitions", json={
+        "product_id": draft["product_id"],
+        "quantity": draft["quantity"],
+    })
+    assert response.status_code == 201
+    assert response.json()["quantity"] == draft["quantity"]
+
+
 # ---------- POST /requisitions ----------
 
 def test_create_requisition_returns_and_saves_record(client):

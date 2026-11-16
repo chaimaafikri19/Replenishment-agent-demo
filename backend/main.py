@@ -15,6 +15,7 @@ from pydantic import BaseModel, Field
 
 # Reuse the calculations from check_data.py instead of writing them twice.
 from backend.check_data import days_of_stock_left, risk_group
+from backend.agent import suggest_requisitions
 
 # File locations, built relative to this file (same idea as in check_data.py).
 DATA_FOLDER = Path(__file__).parent.parent / "data"
@@ -83,6 +84,16 @@ def get_stock():
 def get_suppliers():
     """All suppliers."""
     return load_data()["suppliers"]
+
+
+@app.get("/agent/suggestions")
+def get_agent_suggestions():
+    """
+    Draft requisitions for every at-risk product, most urgent first.
+    Nothing is saved here: a person confirms a draft by sending its
+    product_id and quantity to POST /requisitions.
+    """
+    return suggest_requisitions(load_data())
 
 
 @app.post("/requisitions", status_code=201)  # 201 means "created"

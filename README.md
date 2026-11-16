@@ -60,6 +60,7 @@ replenishment-demo/
 ├── pytest.ini           # Settings for the tests
 ├── backend/
 │   ├── main.py          # The FastAPI app (the API endpoints)
+│   ├── agent.py         # Drafts reorder suggestions with a reason for each
 │   └── check_data.py    # Validates data.json and holds the risk rules
 ├── data/
 │   ├── data.json        # Fictional products and suppliers
@@ -96,6 +97,7 @@ in your browser.
 |----------------------|----------------------------------------------------------------|
 | `GET /stock`         | All products, with `days_of_stock_left` and `risk_group` added |
 | `GET /suppliers`     | All suppliers                                                  |
+| `GET /agent/suggestions` | Draft requisitions for at-risk products, with quantity, urgency, delivery date and a reason. Saves nothing |
 | `POST /requisitions` | Saves `{"product_id": "P003", "quantity": 2000}` to `data/requisitions.json` and returns the saved record |
 
 ## Planned steps
@@ -103,6 +105,6 @@ in your browser.
 - [x] Project description and folder structure
 - [x] Fictional data in `data/`
 - [x] FastAPI app in `backend/` that serves the data
-- [ ] Reorder logic (reorder point, suggested order quantity)
-- [ ] Agent that explains its recommendations in plain language
+- [x] Reorder logic (suggested order quantity)
+- [x] Agent that explains its recommendations in plain language (template-based)
 - [ ] Dashboard in `frontend/`
